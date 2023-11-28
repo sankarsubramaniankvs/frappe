@@ -63,6 +63,7 @@ frappe.ui.form.on("Customize Form", {
 							frm.set_value("doc_type", "");
 						} else {
 							frm.refresh();
+							frm.trigger('add_list_view_button');
 							frm.trigger("add_customize_child_table_button");
 							frm.trigger("setup_default_views");
 						}
@@ -77,6 +78,15 @@ frappe.ui.form.on("Customize Form", {
 
 	is_calendar_and_gantt: function (frm) {
 		frm.trigger("setup_default_views");
+	},
+
+	add_list_view_button: function(frm) {
+		frm.add_custom_button(
+			__("Go to {0} List", [__(frm.doc.doc_type)]),
+			function () {
+				frappe.set_route("List", frm.doc.doc_type);
+			}
+		);
 	},
 
 	add_customize_child_table_button: function (frm) {
@@ -99,14 +109,6 @@ frappe.ui.form.on("Customize Form", {
 			frappe.model.with_doctype(frm.doc.doc_type).then(() => {
 				frm.page.set_title(__("Customize Form - {0}", [frm.doc.doc_type]));
 				frappe.customize_form.set_primary_action(frm);
-
-				frm.add_custom_button(
-					__("Go to {0} List", [__(frm.doc.doc_type)]),
-					function () {
-						frappe.set_route("List", frm.doc.doc_type);
-					},
-					__("Actions")
-				);
 
 				frm.add_custom_button(
 					__("Set Permissions"),

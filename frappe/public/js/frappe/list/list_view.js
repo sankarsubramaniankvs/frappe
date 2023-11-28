@@ -1663,13 +1663,12 @@ frappe.views.ListView = class ListView extends frappe.views.BaseList {
 			items.push({
 				label: __("Customize", null, "Button in list view menu"),
 				action: () => {
+					console.log('called');
 					if (!this.meta) return;
 					if (this.meta.custom) {
-						frappe.set_route("form", "doctype", doctype);
+						window.open(`/app/doctype/${encodeURIComponent(doctype)}`);
 					} else if (!this.meta.custom) {
-						frappe.set_route("form", "customize-form", {
-							doc_type: doctype,
-						});
+						window.open(`/app/customize-form/?doc_type=${encodeURIComponent(doctype)}`);
 					}
 				},
 				standard: true,
@@ -1689,7 +1688,7 @@ frappe.views.ListView = class ListView extends frappe.views.BaseList {
 			// edit doctype
 			items.push({
 				label: __("Edit DocType", null, "Button in list view menu"),
-				action: () => frappe.set_route("form", "doctype", doctype),
+				action: () => window.open(`/app/doctype/${encodeURIComponent(doctype)}`),
 				standard: true,
 			});
 		}

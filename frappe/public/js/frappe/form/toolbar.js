@@ -527,11 +527,9 @@ frappe.ui.form.Toolbar = class Toolbar {
 					__("Customize"),
 					() => {
 						if (this.frm.meta && this.frm.meta.custom) {
-							frappe.set_route("Form", "DocType", doctype);
+							window.open(`/app/doctype/${encodeURIComponent(this.frm.doctype)}`);
 						} else {
-							frappe.set_route("Form", "Customize Form", {
-								doc_type: doctype,
-							});
+							window.open(`/app/customize-form/?doc_type=${encodeURIComponent(this.frm.doctype)}`);
 						}
 					},
 					true
@@ -545,7 +543,7 @@ frappe.ui.form.Toolbar = class Toolbar {
 				this.page.add_menu_item(
 					__("Edit DocType"),
 					() => {
-						frappe.set_route("Form", "DocType", this.frm.doctype);
+						window.open(`/app/doctype/${encodeURIComponent(this.frm.doctype)}`);
 					},
 					true
 				);
